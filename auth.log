@@ -1,0 +1,5 @@
+2026-09-10 10:00:01 Failed password for root from 192.168.1.50 port 22
+2026-09-10 10:00:02 Failed password for admin from 192.168.1.50 port 22
+2026-09-10 10:00:03 Failed password for user1 from 192.168.1.50 port 22
+2026-09-10 10:00:04 Accepted password for user2 from 10.0.0.5 port 22
+2026-09-10 10:00:05 CRITICAL: Unauthorized access attempt detected
