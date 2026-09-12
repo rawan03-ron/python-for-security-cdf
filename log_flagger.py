@@ -1,7 +1,7 @@
-from collections import Counter
 import re
+from collections import Counter
 
-# 1. إنشاء ملف سجل وهمي لاختبار الأداة (توفير البيانات)
+# 1. إنشاء ملف سجل وهمي لاختبار الأداة
 sample_log_content = """
 2026-09-10 10:00:01 Failed password for root from 192.168.1.50 port 22
 2026-09-10 10:00:02 Failed password for admin from 192.168.1.50 port 22
@@ -14,12 +14,9 @@ with open("auth.log", "w") as f:
   f.write(sample_log_content.strip())
 
 
-# 2. Option B: Log Anomaly Flagger (الكود المعطى)
+# 2. Option B: Log Anomaly Flagger
 def flag_keywords(filename, keywords):
-  """Print any line in filename containing one of keywords.
-
-  (floor)
-  """
+  """Print any line in filename containing one of keywords (floor)."""
   with open(filename) as f:
     for line in f:
       if any(keyword in line for keyword in keywords):
@@ -27,10 +24,7 @@ def flag_keywords(filename, keywords):
 
 
 def flag_ip_threshold(filename, threshold):
-  """Flag any source IP with more than `threshold` failed attempts.
-
-  (ceiling)
-  """
+  """Flag any source IP with more than `threshold` failed attempts (ceiling)."""
   ip_counts = Counter()
   with open(filename) as f:
     for line in f:
@@ -38,12 +32,13 @@ def flag_ip_threshold(filename, threshold):
         match = re.search(r"\d+\.\d+\.\d+\.\d+", line)
         if match:
           ip_counts[match.group()] += 1
+
   for ip, count in ip_counts.items():
     if count > threshold:
       print(f"FLAGGED: {ip} ({count} failed attempts)")
 
 
-# 3. استدعاء الدوال وتطبيق الأداة (التشغيل الفعلية)
+# 3. استدعاء الدوال وتطبيق الأداة
 print("--- Floor: Keyword Matching ---")
 flag_keywords("auth.log", ["CRITICAL", "Unauthorized"])
 
