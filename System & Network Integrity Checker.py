@@ -1,20 +1,17 @@
-import csv
-import hashlib
-import socket
-from collections import Counter
 import requests
 
-# ==========================================
 # Exercise 1: fetch https://httpbin.org/uuid and print just the "uuid" field
-# ==========================================
 response = requests.get("https://httpbin.org/uuid")
 if response.status_code == 200:
-  data = response.json()  # Parses JSON directly into a Python dictionary
-  print("Extracted UUID:", data["uuid"])
+    data = response.json()  # Parses JSON directly into a Python dictionary
+    print("Extracted UUID:", data["uuid"])
 
-# ==========================================
-# Exercise 2: find the src_ip with the highest total bytes transferred
-# ==========================================
+
+
+
+from collections import Counter
+import csv
+
 exercise_connections_csv = """timestamp,src_ip,dst_port,protocol,bytes
 2026-03-02T11:00:01,10.2.0.5,443,tcp,4000
 2026-03-02T11:00:04,10.2.0.6,53,udp,120
@@ -26,6 +23,7 @@ exercise_connections_csv = """timestamp,src_ip,dst_port,protocol,bytes
 with open("exercise_connections.csv", "w") as f:
   f.write(exercise_connections_csv)
 
+# Exercise 2: find the src_ip with the highest total bytes transferred
 ip_bytes = Counter()
 
 with open("exercise_connections.csv", mode="r") as f:
@@ -38,9 +36,11 @@ top_talker, total_bytes = ip_bytes.most_common(1)[0]
 print(f"Top Talker: {top_talker} with {total_bytes} bytes")
 
 
-# ==========================================
-# Exercise 3: Combine hashing and a port check
-# ==========================================
+
+import hashlib
+import socket
+
+
 def quick_check(path, host, port):
   """Return {'sha256': ..., 'port_status': 'open'|'closed'}."""
   result = {}
@@ -62,10 +62,6 @@ def quick_check(path, host, port):
 
   return result
 
-
-# انشاء ملف تجريبي لضمان فحص الـ Hash
-with open("sample_file.txt", "w") as f:
-  f.write("Sample content for testing.")
 
 # Execution test:
 print(quick_check("sample_file.txt", "127.0.0.1", 22))
